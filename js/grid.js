@@ -19,7 +19,7 @@ Grid.prototype.add = function(obj, x, y )
 	this.list[y][x] = obj;
 };
 
-Grid.prototype.remove = function( x, y )
+Grid.prototype.remove = function( x , y )
 {
 	this.list[y][x] = null;
 }
@@ -29,10 +29,36 @@ Grid.prototype.clear = function()
 	this.createList(this.x, this.y);
 }
 
+Grid.prototype.getNeighborCount = function( x , y)
+{
+    var count = 0;
+
+    if( x > 0 && x < this.x-1)
+    {
+        if( this.getObject(x+1,y) != null )
+            count++;
+
+        if( this.getObject(x-1,y) != null )
+            count++;        
+    }
+
+    if( y > 0 && y < this.y-1)
+    {
+        if( this.getObject(x,y+1) != null )
+            count++;
+        
+        if( this.getObject(x,y-1) != null )
+            count++;        
+    }
+
+    return count;
+}
+
 Grid.prototype.isGridEmpty = function()
 {
 	if(this.getObjects().length <= 0)
-		return true;
+        return true;
+    
 	return false;
 }
 

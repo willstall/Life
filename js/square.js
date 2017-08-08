@@ -35,7 +35,11 @@
         {
             this.isAlive = (this.isAlive) ? ( false ) : ( true );
             this.onMouseOut();
-            // console.log(this.point);
+        }
+        p.updateAliveState = function( state )
+        {
+            this.isAlive = state;
+            this.onMouseOut();
         }
 
     window.Square = createjs.promote( Square, "Shape" );

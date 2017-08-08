@@ -60,7 +60,7 @@ function mouseUp( event )
 			var obj = objs[i];
 
 			var neighborCount = getAliveNeighborCount(obj.point.x, obj.point.y);
-			console.log(neighborCount);
+			
 			if(neighborCount == 0 || neighborCount == 4)
 			{
 				deadObjects.push( obj );
@@ -87,30 +87,33 @@ function getAliveNeighborCount( x, y )
 
     if( x > 0 && x < grid.x-1)
     {
-		objCheck = grid.getObject(x+1,y);
-		if(objCheck != null && objCheck.isAlive == true)
-            count++;
+		if( checkObjectState( x+1,y, true ))
+			count++;
 
-		objCheck = grid.getObject(x-1,y);
-		if(objCheck != null && objCheck.isAlive == true)
-            count++;     
+		if( checkObjectState( x-1,y, true ))
+			count++;   
     }
 
     if( y > 0 && y < grid.y-1)
     {
-		objCheck = grid.getObject(x,y+1);
-		if(objCheck != null && objCheck.isAlive == true)
-            count++;
+		if( checkObjectState( x,y+1, true ))
+			count++;
 
-		objCheck = grid.getObject(x,y-1);
-		if(objCheck != null && objCheck.isAlive == true)
-            count++;        
+		if( checkObjectState( x,y-1, true ))
+			count++;       
     }
 
     return count;
 }
 
+function checkObjectState( x,y, stateCheck )
+{
+	var objCheck = grid.getObject( x , y );
+	if(objCheck != null && objCheck.isAlive == stateCheck)
+		return true;
 
+	return false;
+}
 
 
 // function update( event )

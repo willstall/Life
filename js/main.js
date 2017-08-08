@@ -42,6 +42,7 @@ function main()
 
 function mouseUp( event )
 {
+	// console.log( event );
 	var pos = virtualGrid.PositionToGrid( stage.mouseX, stage.mouseY );
 	var mouseObj = grid.getObject( pos.x, pos.y );
 
@@ -53,17 +54,28 @@ function mouseUp( event )
 		currentLevel++;
 
 		var deadObjects = new Array();
+		var aliveObjects = new Array();
 		var objs = grid.getObjects();
 
 		for(var i = 0; i < objs.length; i++)
 		{
 			var obj = objs[i];
 
-			var neighborCount = getAliveNeighborCount(obj.point.x, obj.point.y);
-			
-			if(neighborCount == 0 || neighborCount == 4)
+			if(obj.isAlive == true)
 			{
-				deadObjects.push( obj );
+				var neighborCount = getNeighborCount(obj.point.x, obj.point.y, true);
+				
+				if(neighborCount == 0 || neighborCount == 4)
+				{
+					deadObjects.push( obj );
+				}
+			}else{
+				var neighborCount = getNeighborCount(obj.point.x, obj.point.y, false);
+				
+				if(neighborCount == 3 )
+				{
+					aliveObjects.push( obj );
+				}	
 			}
 		}
 
@@ -73,6 +85,12 @@ function mouseUp( event )
 				deadObj.updateAliveState( false );
 		}
 
+		for(var d = 0; d < aliveObjects.length; d++)
+		{
+			var aliveObj = aliveObjects[d];
+				aliveObj.updateAliveState( true );
+		}
+
 		console.log("[ game updated ]");	
 
 		// Alive cells with exactly two or three alive neighbors live on.
@@ -80,26 +98,26 @@ function mouseUp( event )
 	}
 }
 
-function getAliveNeighborCount( x, y )
+function getNeighborCount( x, y , checkState)
 {
     var count = 0;
 	var objCheck;
 
     if( x > 0 && x < grid.x-1)
     {
-		if( checkObjectState( x+1,y, true ))
+		if( checkObjectState( x+1,y, checkState ))
 			count++;
 
-		if( checkObjectState( x-1,y, true ))
+		if( checkObjectState( x-1,y, checkState ))
 			count++;   
     }
 
     if( y > 0 && y < grid.y-1)
     {
-		if( checkObjectState( x,y+1, true ))
+		if( checkObjectState( x,y+1, checkState ))
 			count++;
 
-		if( checkObjectState( x,y-1, true ))
+		if( checkObjectState( x,y-1, checkState ))
 			count++;       
     }
 

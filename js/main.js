@@ -1,29 +1,41 @@
+var square;
+var grid;
+
 function main()
 {	
 	// Setup
 	setup();
-	
-	// Keyboard Test
+
+	// Listeners
 	document.onkeydown = keyPressed;
+	document.onmousedown = ( mouseDown ).bind( this );
+	document.onmouseup = ( mouseUp ).bind( this );
+	stage.on("tick", update, this);
 
-	// Display Test
-	// var testing = new createjs.Shape();
-	// 	//testing.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-	// 	testing.graphics.beginFill("DeepSkyBlue").rect(0,0,50,50);
-	// 	testing.originX = testing.x;
-	// 	testing.counter = 0;
-	// 	testing.increment = .1;
-	// 	testing.amplitude = 50;
-	// 	testing.on("tick", update);
-
-	// container.addChild(testing);  
-
-	// Extension Test
-	  var square = new Square( 50 );
-	  
-	  container.addChild( square );
-}
+	// Init
+	grid = new VirtualGrid( 2 );
+	square = new Square( 50 );
 	
+	container.addChild( square );
+}
+
+function mouseDown( event )
+{
+	var mp = currentMousePosition = container.globalToLocal( stage.mouseX , stage.mouseY ) ;
+	var pos = grid.PositionToGrid( mp.x, mp.y );
+	console.log( pos );
+}
+
+function mouseUp( event )
+{
+
+}
+
+function update( event )
+{
+	// console.log("hey");
+}
+
 function keyPressed( event )
 {
 	//Keycodes found at http://keycode.info
@@ -31,10 +43,4 @@ function keyPressed( event )
 	{
 		console.log("testing");
 	}
-}
-
-function update( event )
-{
-	event.target.x = event.target.originX + Math.sin( event.target.counter ) * event.target.amplitude;
-	event.target.counter += event.target.increment;
 }

@@ -3,7 +3,6 @@ function VirtualGrid(spacing)
 	this.spacing = spacing;
 }
 
-
 VirtualGrid.prototype.GridToPosition = function(x, y)
 {
 	return new Point( x * this.spacing, y * this.spacing );

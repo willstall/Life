@@ -59,7 +59,7 @@ function mouseUp( event )
 		{
 			var obj = objs[i];
 
-			var neighborCount = grid.getNeighborCount(obj.point.x, obj.point.y);
+			var neighborCount = getAliveNeighborCount(obj.point.x, obj.point.y);
 			console.log(neighborCount);
 			if(neighborCount == 0 || neighborCount == 4)
 			{
@@ -78,6 +78,36 @@ function mouseUp( event )
 		// Alive cells with exactly two or three alive neighbors live on.
 		// Dead cells with exactly three alive neighbors become alive.
 	}
+}
+
+function getAliveNeighborCount( x, y )
+{
+    var count = 0;
+	var objCheck;
+
+    if( x > 0 && x < grid.x-1)
+    {
+		objCheck = grid.getObject(x+1,y);
+		if(objCheck != null && objCheck.isAlive == true)
+            count++;
+
+		objCheck = grid.getObject(x-1,y);
+		if(objCheck != null && objCheck.isAlive == true)
+            count++;     
+    }
+
+    if( y > 0 && y < grid.y-1)
+    {
+		objCheck = grid.getObject(x,y+1);
+		if(objCheck != null && objCheck.isAlive == true)
+            count++;
+
+		objCheck = grid.getObject(x,y-1);
+		if(objCheck != null && objCheck.isAlive == true)
+            count++;        
+    }
+
+    return count;
 }
 
 

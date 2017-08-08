@@ -73,7 +73,10 @@ function mouseUp( event )
 				deadObj.updateAliveState( false );
 		}
 
-		console.log("game updated");
+		console.log("[ game updated ]");	
+
+		// Alive cells with exactly two or three alive neighbors live on.
+		// Dead cells with exactly three alive neighbors become alive.
 	}
 }
 

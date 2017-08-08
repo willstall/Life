@@ -1,15 +1,19 @@
 (function() {
-    function Square( size = 50)
+    function Square( size = 50 ,x = 0, y = 0)
     {
         this.Shape_constructor();
         
         this.size = size;
         this.color = "DeepSkyBlue";
+        this.isAlive = false;
 
         this.render();
 
+        this.point = new Point( x, y );
+
         this.on("mouseover", this.onMouseOver, this);
         this.on("mouseout", this.onMouseOut, this);
+        this.on("click", this.onClick, this);
 
         this.onMouseOut();
     }
@@ -22,16 +26,17 @@
         p.onMouseOver = function( event )
         {
             this.alpha = 1;
-            console.log("hey");
         }
         p.onMouseOut = function( event )
         {
-            this.alpha = .2;
+            this.alpha = (this.isAlive)?(.5):(.2);
         }
-	    p.output = function()
-	    {
-	    	console.log("Console Output Test.");
-	    };
+        p.onClick = function( event )
+        {
+            this.isAlive = (this.isAlive) ? ( false ) : ( true );
+            this.onMouseOut();
+            // console.log(this.point);
+        }
 
     window.Square = createjs.promote( Square, "Shape" );
 } () );

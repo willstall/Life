@@ -13,11 +13,11 @@ function main()
 	// Listeners
 	// document.onkeydown = keyPressed;
 	// document.onmousedown = ( mouseDown ).bind( this );
-	document.onmouseup = ( mouseUp ).bind( this );
+	stage.on("pressup", mouseUp ).bind( this );
 	// stage.on("tick", update, this);
 
 	// Init	
-	var gridSize = 10;
+	var gridSize = 24;
 	var squareSize = this.canvas.width / gridSize;
 
 	grid = new Grid(gridSize,gridSize);
@@ -42,7 +42,7 @@ function main()
 
 function mouseUp( event )
 {
-	// console.log( event );
+	//console.log( event );
 	var pos = virtualGrid.PositionToGrid( stage.mouseX, stage.mouseY );
 	var mouseObj = grid.getObject( pos.x, pos.y );
 
